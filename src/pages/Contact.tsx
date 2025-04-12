@@ -269,6 +269,9 @@ const Contact = () => {
             allowFullScreen
             loading="lazy"
             title="Osuele Ventures Location"
+            referrerPolicy="no-referrer"
+            className="rounded-lg shadow-lg"
+            sandbox="allow-scripts allow-same-origin"
           ></iframe>
         </div>
       </section>

@@ -392,8 +392,12 @@ const SportsClub = () => {
                 height="400"
                 className="border-0"
                 allowFullScreen
-                referrerPolicy="no-referrer-when-downgrade"
+                referrerPolicy="no-referrer"
+                loading="lazy"
+                aria-label="Map showing the location of Osuele Sports Club"
                 title="Osuele Sports Club Location"
+                style={{ border: "none", width: "100%", height: "400px" }}
+                sandbox="allow-scripts allow-same-origin"
               ></iframe>
             </div>
           </div>
