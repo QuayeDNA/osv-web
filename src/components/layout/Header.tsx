@@ -1,29 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import OptimizedImage from '../ui/OptimizedImage';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
-    { name: 'Services', path: '/services', 
-      dropdownItems: [
-        { name: 'Telecommunication', path: '/services#telecom' },
-        { name: 'Construction', path: '/services#construction' },
-        { name: 'Engineering', path: '/services#engineering' },
-      ] 
-    },
+    { name: 'Services', path: '/services' },
     { name: 'Projects', path: '/projects' },
     { name: 'Sports Club', path: '/sports-club' },
     { name: 'Contact', path: '/contact' },
   ];
 
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  // Scroll to top when route changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,10 +43,6 @@ const Header = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isMenuOpen]);
-
-  const toggleDropdown = (name: string) => {
-    setOpenDropdown(openDropdown === name ? null : name);
-  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -96,61 +90,20 @@ const Header = () => {
           variants={containerVariants}
         >
           {navLinks.map((link) => (
-            <div key={link.path} className="relative group">
-              {link.dropdownItems ? (
-                <div className="inline-block">
-                  <button 
-                    className="font-medium px-3 xl:px-4 py-2 rounded-md transition-colors hover:bg-light group flex items-center whitespace-nowrap"
-                    onClick={() => toggleDropdown(link.name)}
-                  >
-                    <span className={`${openDropdown === link.name ? 'text-accent' : 'text-primary'}`}>
-                      {link.name}
-                    </span>
-                    <ChevronDown 
-                      size={16} 
-                      className={`ml-1 transition-transform duration-300 ${openDropdown === link.name ? 'rotate-180 text-accent' : 'text-primary'}`} 
-                    />
-                  </button>
-                  <AnimatePresence>
-                    {openDropdown === link.name && (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg py-2 z-20"
-                      >
-                        {link.dropdownItems.map((item) => (
-                          <Link 
-                            key={item.path}
-                            to={item.path} 
-                            className="block px-4 py-2 text-primary hover:bg-light hover:text-accent transition-colors"
-                            onClick={() => setOpenDropdown(null)}
-                          >
-                            {item.name}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ) : (
-                <motion.div variants={itemVariants}>
-                  <NavLink
-                    to={link.path}
-                    className={({ isActive }) => 
-                      `font-medium px-3 xl:px-4 py-2 rounded-md transition-all block hover:bg-light whitespace-nowrap ${
-                        isActive 
-                          ? 'text-accent relative after:absolute after:bottom-0 after:left-3 after:right-3 xl:after:left-4 xl:after:right-4 after:h-0.5 after:bg-accent' 
-                          : 'text-primary'
-                      }`
-                    }
-                  >
-                    {link.name}
-                  </NavLink>
-                </motion.div>
-              )}
-            </div>
+            <motion.div key={link.path} variants={itemVariants}>
+              <NavLink
+                to={link.path}
+                className={({ isActive }) => 
+                  `font-medium px-3 xl:px-4 py-2 rounded-md transition-all block hover:bg-light whitespace-nowrap ${
+                    isActive 
+                      ? 'text-accent relative after:absolute after:bottom-0 after:left-3 after:right-3 xl:after:left-4 xl:after:right-4 after:h-0.5 after:bg-accent' 
+                      : isScrolled ? 'text-primary' : 'text-primary'
+                  }`
+                }
+              >
+                {link.name}
+              </NavLink>
+            </motion.div>
           ))}
           
           <motion.div variants={itemVariants}>
@@ -194,56 +147,17 @@ const Header = () => {
             <div className="container mx-auto px-4 py-4 flex flex-col divide-y divide-gray-100">
               {navLinks.map((link) => (
                 <div key={link.path} className="py-2">
-                  {link.dropdownItems ? (
-                    <div>
-                      <button 
-                        className="w-full flex justify-between items-center font-medium py-2 text-primary"
-                        onClick={() => toggleDropdown(link.name)}
-                      >
-                        {link.name}
-                        <ChevronDown 
-                          size={16} 
-                          className={`transition-transform duration-300 ${openDropdown === link.name ? 'rotate-180 text-accent' : ''}`} 
-                        />
-                      </button>
-                      <AnimatePresence>
-                        {openDropdown === link.name && (
-                          <motion.div 
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            className="ml-4 border-l-2 border-accent/20 pl-4 mt-2 space-y-2"
-                          >
-                            {link.dropdownItems.map((item) => (
-                              <Link 
-                                key={item.path}
-                                to={item.path} 
-                                className="block py-2 text-primary/80 hover:text-accent transition-colors"
-                                onClick={() => {
-                                  setOpenDropdown(null);
-                                  setIsMenuOpen(false);
-                                }}
-                              >
-                                {item.name}
-                              </Link>
-                            ))}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  ) : (
-                    <NavLink
-                      to={link.path}
-                      className={({ isActive }) => 
-                        `block font-medium py-2 transition-colors ${
-                          isActive ? 'text-accent' : 'text-primary'
-                        }`
-                      }
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {link.name}
-                    </NavLink>
-                  )}
+                  <NavLink
+                    to={link.path}
+                    className={({ isActive }) => 
+                      `block font-medium py-2 transition-colors ${
+                        isActive ? 'text-accent' : 'text-primary'
+                      }`
+                    }
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.name}
+                  </NavLink>
                 </div>
               ))}
               
