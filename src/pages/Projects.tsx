@@ -2,118 +2,174 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import OptimizedImage from '../components/ui/OptimizedImage';
+import { getImageSizes } from '../utils/image-utils';
 
-type Project = {
+// Project type definition
+type CategoryId = 'all' | 'telecom' | 'construction' | 'civil' | 'equipment' | 'supplies';
+
+interface Project {
   id: number;
   title: string;
   category: string;
-  image: string;
   description: string;
+  image: string;
+  detailImage?: string;
+  year: string;
   client: string;
   location: string;
-  year: string;
-};
+}
 
-type Category = 'all' | 'telecom' | 'construction' | 'civil' | 'equipment' | 'supplies';
+// Project data
+const projectsData: Project[] = [
+  {
+    id: 1,
+    title: 'Network Infrastructure Upgrade',
+    category: 'telecom',
+    description: 'A comprehensive upgrade of telecommunication infrastructure for a major corporate client, including network optimization and expansion.',
+    image: '/images/projects/telecom-1.jpg',
+    detailImage: '/images/projects/telecom-1-detail.jpg',
+    year: '2023',
+    client: 'Business Communications Limited',
+    location: 'Accra, Ghana',
+  },
+  {
+    id: 2,
+    title: 'Rural Connectivity Project',
+    category: 'telecom',
+    description: 'Extending telecommunication services to previously underserved rural communities through innovative and cost-effective solutions.',
+    image: '/images/projects/telecom-2.jpg',
+    detailImage: '/images/projects/telecom-2-detail.jpg',
+    year: '2022',
+    client: 'Ghana Rural Development Initiative',
+    location: 'Northern Region, Ghana',
+  },
+  {
+    id: 3,
+    title: 'Luxury Apartment Complex',
+    category: 'construction',
+    image: '/images/projects/construction-1.jpg',
+    description: 'Design and construction of a 50-unit luxury apartment complex with modern amenities, underground parking, and landscaped gardens.',
+    client: 'Prime Development Ltd',
+    location: 'Kumasi, Ghana',
+    year: '2022'
+  },
+  {
+    id: 4,
+    title: 'Highway Bridge Construction',
+    category: 'civil',
+    image: '/images/projects/civil-1.jpg',
+    description: 'Engineering and construction of a reinforced concrete bridge spanning 100 meters across a river, connecting two major communities.',
+    client: 'Ghana Highway Authority',
+    location: 'Eastern Region, Ghana',
+    year: '2021'
+  },
+  {
+    id: 5,
+    title: 'Telecommunications Tower Installation',
+    category: 'equipment',
+    image: '/images/projects/equipment-1.jpg',
+    description: 'Supply and installation of telecommunications towers in rural areas to improve connectivity, including solar power systems.',
+    client: 'National Communications Authority',
+    location: 'Northern Region, Ghana',
+    year: '2023'
+  },
+  {
+    id: 6,
+    title: 'Office Complex Renovation',
+    category: 'construction',
+    image: '/images/projects/construction-2.jpg',
+    description: 'Complete renovation of a 10-story office building including structural repairs, modern interior design, and upgraded utilities.',
+    client: 'Business Plaza Ltd',
+    location: 'Accra, Ghana',
+    year: '2022'
+  },
+  {
+    id: 7,
+    title: 'Medical Equipment Supply',
+    category: 'supplies',
+    image: '/images/projects/supplies-1.jpg',
+    description: 'Procurement and delivery of specialized medical equipment for a new hospital wing, including installation and staff training.',
+    client: 'Korle Bu Teaching Hospital',
+    location: 'Accra, Ghana',
+    year: '2021'
+  },
+  {
+    id: 8,
+    title: 'Water Treatment Plant',
+    category: 'civil',
+    image: '/images/projects/civil-2.jpg',
+    description: 'Design and construction of a water treatment facility capable of processing 10,000 gallons per day, serving multiple communities.',
+    client: 'Ghana Water Company',
+    location: 'Western Region, Ghana',
+    year: '2023'
+  },
+  {
+    id: 9,
+    title: 'Hotel Network Upgrade',
+    category: 'telecom',
+    image: '/images/projects/telecom-2.jpg',
+    description: 'Comprehensive upgrade of a 5-star hotel\'s network infrastructure, improving guest connectivity and internal operations.',
+    client: 'Luxury Stays Hotel',
+    location: 'Takoradi, Ghana',
+    year: '2022'
+  },
+  {
+    id: 10,
+    title: 'School Furniture Supply',
+    category: 'supplies',
+    image: '/images/projects/supplies-2.jpg',
+    description: 'Manufacturing and delivery of classroom furniture for 20 newly constructed schools, including desks, chairs, and storage cabinets.',
+    client: 'Ghana Education Service',
+    location: 'Multiple Locations, Ghana',
+    year: '2021'
+  }
+];
+
+// Category definition
+const categoryOptions = [
+  { id: 'all' as CategoryId, name: 'All Projects' },
+  { id: 'telecom' as CategoryId, name: 'Telecommunication' },
+  { id: 'construction' as CategoryId, name: 'Construction' },
+  { id: 'civil' as CategoryId, name: 'Civil Engineering' },
+  { id: 'equipment' as CategoryId, name: 'Equipment' },
+  { id: 'supplies' as CategoryId, name: 'Supplies' }
+];
+
+// Testimonial interface
+interface Testimonial {
+  id: string;
+  quote: string;
+  author: string;
+  position: string;
+}
+
+// Testimonial data
+const testimonialData: Testimonial[] = [
+  {
+    id: 'testimonial-1',
+    quote: "Osuele Ventures delivered our telecommunications infrastructure project on time and within budget. Their team's expertise and professionalism were exceptional throughout the process.",
+    author: "Michael Adenuga",
+    position: "IT Director, Global Finance Corporation",
+  },
+  {
+    id: 'testimonial-2',
+    quote: "The quality of construction and attention to detail was impressive. We're extremely satisfied with our new office complex and the support provided by the Osuele team.",
+    author: "Sarah Mensah",
+    position: "CEO, Prime Development Ltd",
+  },
+  {
+    id: 'testimonial-3',
+    quote: "Working with Osuele Ventures on our civil engineering project was a pleasure. Their technical knowledge and project management skills ensured a smooth execution.",
+    author: "Kwame Acheampong",
+    position: "Project Manager, Ghana Highway Authority",
+  }
+];
 
 const Projects = () => {
-  const [activeCategory, setActiveCategory] = useState<Category>('all');
-  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
+  const [activeCategory, setActiveCategory] = useState<CategoryId>('all');
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projectsData);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-  // Sample project data - replace with actual projects
-  const projects: Project[] = [
-    {
-      id: 1,
-      title: 'Corporate Office Network Installation',
-      category: 'telecom',
-      image: '/images/projects/telecom-1.jpg',
-      description: 'Complete network infrastructure setup for a corporate headquarters, including fiber optic cabling, network hardware, and VoIP phone systems.',
-      client: 'Global Finance Corporation',
-      location: 'Accra, Ghana',
-      year: '2023'
-    },
-    {
-      id: 2,
-      title: 'Luxury Apartment Complex',
-      category: 'construction',
-      image: '/images/projects/construction-1.jpg',
-      description: 'Design and construction of a 50-unit luxury apartment complex with modern amenities, underground parking, and landscaped gardens.',
-      client: 'Prime Development Ltd',
-      location: 'Kumasi, Ghana',
-      year: '2022'
-    },
-    {
-      id: 3,
-      title: 'Highway Bridge Construction',
-      category: 'civil',
-      image: '/images/projects/civil-1.jpg',
-      description: 'Engineering and construction of a reinforced concrete bridge spanning 100 meters across a river, connecting two major communities.',
-      client: 'Ghana Highway Authority',
-      location: 'Eastern Region, Ghana',
-      year: '2021'
-    },
-    {
-      id: 4,
-      title: 'Telecommunications Tower Installation',
-      category: 'equipment',
-      image: '/images/projects/equipment-1.jpg',
-      description: 'Supply and installation of telecommunications towers in rural areas to improve connectivity, including solar power systems.',
-      client: 'National Communications Authority',
-      location: 'Northern Region, Ghana',
-      year: '2023'
-    },
-    {
-      id: 5,
-      title: 'Office Complex Renovation',
-      category: 'construction',
-      image: '/images/projects/construction-2.jpg',
-      description: 'Complete renovation of a 10-story office building including structural repairs, modern interior design, and upgraded utilities.',
-      client: 'Business Plaza Ltd',
-      location: 'Accra, Ghana',
-      year: '2022'
-    },
-    {
-      id: 6,
-      title: 'Medical Equipment Supply',
-      category: 'supplies',
-      image: '/images/projects/supplies-1.jpg',
-      description: 'Procurement and delivery of specialized medical equipment for a new hospital wing, including installation and staff training.',
-      client: 'Korle Bu Teaching Hospital',
-      location: 'Accra, Ghana',
-      year: '2021'
-    },
-    {
-      id: 7,
-      title: 'Water Treatment Plant',
-      category: 'civil',
-      image: '/images/projects/civil-2.jpg',
-      description: 'Design and construction of a water treatment facility capable of processing 10,000 gallons per day, serving multiple communities.',
-      client: 'Ghana Water Company',
-      location: 'Western Region, Ghana',
-      year: '2023'
-    },
-    {
-      id: 8,
-      title: 'Hotel Network Upgrade',
-      category: 'telecom',
-      image: '/images/projects/telecom-2.jpg',
-      description: 'Comprehensive upgrade of a 5-star hotel\'s network infrastructure, improving guest connectivity and internal operations.',
-      client: 'Luxury Stays Hotel',
-      location: 'Takoradi, Ghana',
-      year: '2022'
-    },
-    {
-      id: 9,
-      title: 'School Furniture Supply',
-      category: 'supplies',
-      image: '/images/projects/supplies-2.jpg',
-      description: 'Manufacturing and delivery of classroom furniture for 20 newly constructed schools, including desks, chairs, and storage cabinets.',
-      client: 'Ghana Education Service',
-      location: 'Multiple Locations, Ghana',
-      year: '2021'
-    }
-  ];
 
   useEffect(() => {
     // Initialize AOS animation library
@@ -125,13 +181,13 @@ const Projects = () => {
 
     // Filter projects based on active category
     if (activeCategory === 'all') {
-      setFilteredProjects(projects);
+      setFilteredProjects(projectsData);
     } else {
-      setFilteredProjects(projects.filter(project => project.category === activeCategory));
+      setFilteredProjects(projectsData.filter(project => project.category === activeCategory));
     }
   }, [activeCategory]);
 
-  const handleCategoryChange = (category: Category) => {
+  const handleCategoryChange = (category: CategoryId) => {
     setActiveCategory(category);
   };
 
@@ -145,14 +201,12 @@ const Projects = () => {
     document.body.style.overflow = 'auto'; // Restore scrolling
   };
 
-  const categories = [
-    { id: 'all', name: 'All Projects' },
-    { id: 'telecom', name: 'Telecommunication' },
-    { id: 'construction', name: 'Construction' },
-    { id: 'civil', name: 'Civil Engineering' },
-    { id: 'equipment', name: 'Equipment' },
-    { id: 'supplies', name: 'Supplies' }
-  ];
+  // Handle keyboard events for modal
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      closeProjectModal();
+    }
+  };
 
   return (
     <>
@@ -187,10 +241,10 @@ const Projects = () => {
           {/* Category Filter */}
           <div className="mb-10 overflow-x-auto" data-aos="fade-up">
             <div className="flex space-x-4 pb-2">
-              {categories.map(category => (
+              {categoryOptions.map(category => (
                 <button
                   key={category.id}
-                  onClick={() => handleCategoryChange(category.id as Category)}
+                  onClick={() => handleCategoryChange(category.id)}
                   className={`px-4 py-2 rounded-md whitespace-nowrap transition-colors ${
                     activeCategory === category.id
                       ? 'bg-primary text-white'
@@ -212,17 +266,22 @@ const Projects = () => {
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
                 onClick={() => openProjectModal(project)}
+                onKeyDown={(e) => e.key === 'Enter' && openProjectModal(project)}
+                tabIndex={0}
+                role="button"
+                aria-label={`View details of ${project.title}`}
               >
                 <div className="h-56 overflow-hidden">
-                  <img
+                  <OptimizedImage
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    sizes={getImageSizes('lg:w-1/3 md:w-1/2')}
                   />
                 </div>
                 <div className="p-6">
                   <span className="text-sm font-medium px-3 py-1 rounded-full bg-light text-primary inline-block mb-3">
-                    {categories.find(c => c.id === project.category)?.name}
+                    {categoryOptions.find(c => c.id === project.category)?.name}
                   </span>
                   <h3 className="text-xl font-bold mb-2">{project.title}</h3>
                   <p className="text-secondary/80 line-clamp-2">{project.description}</p>
@@ -245,28 +304,41 @@ const Projects = () => {
 
       {/* Project Detail Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+        <div 
+          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+          onClick={closeProjectModal}
+          onKeyDown={handleKeyDown}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+        >
           <div 
             className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             onClick={e => e.stopPropagation()}
+            onKeyDown={e => e.stopPropagation()}
+            role="document"
+            tabIndex={-1}
           >
             <div className="relative">
               <button
                 onClick={closeProjectModal}
                 className="absolute top-4 right-4 w-10 h-10 bg-primary/80 text-white rounded-full flex items-center justify-center hover:bg-primary z-10"
+                aria-label="Close modal"
               >
                 ✕
               </button>
               <div className="h-72 md:h-96">
-                <img
-                  src={selectedProject.image}
+                <OptimizedImage
+                  src={selectedProject.detailImage ?? selectedProject.image}
                   alt={selectedProject.title}
                   className="w-full h-full object-cover"
+                  sizes="(min-width: 768px) 768px, 100vw"
+                  priority={true}
                 />
               </div>
             </div>
             <div className="p-6 md:p-8">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">{selectedProject.title}</h3>
+              <h3 id="modal-title" className="text-2xl md:text-3xl font-bold mb-4">{selectedProject.title}</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                 <div>
@@ -334,25 +406,9 @@ const Projects = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                quote: "Osuele Ventures delivered our telecommunications infrastructure project on time and within budget. Their team's expertise and professionalism were exceptional throughout the process.",
-                author: "Michael Adenuga",
-                position: "IT Director, Global Finance Corporation",
-              },
-              {
-                quote: "The quality of construction and attention to detail was impressive. We're extremely satisfied with our new office complex and the support provided by the Osuele team.",
-                author: "Sarah Mensah",
-                position: "CEO, Prime Development Ltd",
-              },
-              {
-                quote: "Working with Osuele Ventures on our civil engineering project was a pleasure. Their technical knowledge and project management skills ensured a smooth execution.",
-                author: "Kwame Acheampong",
-                position: "Project Manager, Ghana Highway Authority",
-              }
-            ].map((testimonial, index) => (
+            {testimonialData.map((testimonial, index) => (
               <div
-                key={index}
+                key={testimonial.id}
                 className="bg-white p-6 rounded-lg shadow-md"
                 data-aos="fade-up"
                 data-aos-delay={index * 100}

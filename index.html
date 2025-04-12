@@ -10,6 +10,13 @@
     <!-- Preconnect to font sources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Preload critical hero images -->
+    <link rel="preload" href="/images/hero-bg.jpg" as="image" type="image/jpeg" fetchpriority="high" />
+    
+    <!-- Add support for modern image formats -->
+    <meta http-equiv="Accept-CH" content="DPR, Width, Viewport-Width, Sec-CH-Width" />
+    <meta http-equiv="Accept-CH-Lifetime" content="86400" />
   </head>
   <body>
     <div id="root"></div>

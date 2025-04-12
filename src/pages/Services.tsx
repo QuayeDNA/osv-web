@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Radio, Briefcase, Wrench, Building2, ShieldCheck, Users, ChevronDown, ChevronUp, Check } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import OptimizedImage from '../components/ui/OptimizedImage';
+import { getImageSizes } from '../utils/image-utils';
 
 const servicesData = [
   {
@@ -147,12 +149,15 @@ const Services = () => {
                 data-aos-delay={index * 100}
                 className="bg-light rounded-lg overflow-hidden"
               >
-                <div 
-                  className={`p-6 flex flex-col md:flex-row items-start justify-between cursor-pointer transition-colors hover:bg-light/80`}
+                <button
+                  type="button"
+                  className="p-6 w-full text-left flex flex-col md:flex-row items-start justify-between transition-colors hover:bg-light/80"
                   onClick={() => toggleService(service.id)}
+                  aria-expanded={expandedService === service.id}
+                  aria-controls={`service-content-${service.id}`}
                 >
                   <div className="flex items-center mb-4 md:mb-0">
-                    <div className="mr-4">{service.icon}</div>
+                    <div className="mr-4" aria-hidden="true">{service.icon}</div>
                     <div>
                       <h3 className="text-2xl font-bold">{service.title}</h3>
                       <p className="text-secondary/80">{service.shortDesc}</p>
@@ -160,14 +165,14 @@ const Services = () => {
                   </div>
                   <div className="mt-4 md:mt-0">
                     {expandedService === service.id ? 
-                      <ChevronUp className="w-6 h-6 text-primary" /> : 
-                      <ChevronDown className="w-6 h-6 text-primary" />
+                      <ChevronUp className="w-6 h-6 text-primary" aria-hidden="true" /> : 
+                      <ChevronDown className="w-6 h-6 text-primary" aria-hidden="true" />
                     }
                   </div>
-                </div>
+                </button>
 
                 {expandedService === service.id && (
-                  <div className="p-6 pt-0 border-t border-gray-200">
+                  <div className="p-6 pt-0 border-t border-gray-200" id={`service-content-${service.id}`}>
                     <div className="flex flex-col md:flex-row gap-8">
                       <div className="md:w-2/3">
                         <p className="mb-6">{service.fullDesc}</p>
@@ -182,10 +187,11 @@ const Services = () => {
                         </ul>
                       </div>
                       <div className="md:w-1/3">
-                        <img 
+                        <OptimizedImage 
                           src={`/images/services/${service.id}.jpg`}
                           alt={service.title}
                           className="w-full h-auto rounded-lg shadow-md"
+                          sizes={getImageSizes('md:w-1/3')}
                         />
                       </div>
                     </div>

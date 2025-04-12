@@ -18,6 +18,8 @@ export default defineConfig({
         },
       },
     },
+    // Enhance image asset optimization
+    assetsInlineLimit: 4096, // Only inline images smaller than 4kb
   },
   resolve: {
     alias: {
@@ -26,4 +28,10 @@ export default defineConfig({
   },
   // Don't use relative paths for assets in production build
   base: '/',
+  // Configure asset handling
+  assetsInclude: ['**/*.{png,jpg,jpeg,gif,svg,webp,avif}'],
+  // Optimize image compression
+  optimizeDeps: {
+    exclude: ['@vite/client', '@vite/env'],
+  },
 })

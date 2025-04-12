@@ -17,6 +17,8 @@ import SectionHeader from "../components/ui/SectionHeader";
 import CheckItem from "../components/ui/CheckItem";
 import TabContent from "../components/ui/TabContent";
 import InfoItem from "../components/sports/InfoItem";
+import OptimizedImage from "../components/ui/OptimizedImage";
+import { getImageSizes } from "../utils/image-utils";
 
 // Type for team members
 type TeamMember = {
@@ -169,6 +171,15 @@ const SportsClub = () => {
     document.body.style.overflow = "auto";
   };
 
+  // Handle keyboard events for modal and interactive elements
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      closeEventModal();
+    } else if (e.key === 'Enter') {
+      // The element's onClick will be triggered by Enter
+    }
+  };
+
   return (
     <>
       {/* Hero Section */}
@@ -196,6 +207,7 @@ const SportsClub = () => {
         <div className="container mx-auto">
           <div className="flex flex-wrap justify-center">
             <button
+              type="button"
               onClick={() => setActiveTab("about")}
               className={`px-6 py-4 font-medium text-lg transition-colors ${
                 activeTab === "about"
@@ -206,6 +218,7 @@ const SportsClub = () => {
               About
             </button>
             <button
+              type="button"
               onClick={() => setActiveTab("programs")}
               className={`px-6 py-4 font-medium text-lg transition-colors ${
                 activeTab === "programs"
@@ -216,6 +229,7 @@ const SportsClub = () => {
               Programs
             </button>
             <button
+              type="button"
               onClick={() => setActiveTab("team")}
               className={`px-6 py-4 font-medium text-lg transition-colors ${
                 activeTab === "team"
@@ -226,6 +240,7 @@ const SportsClub = () => {
               Our Team
             </button>
             <button
+              type="button"
               onClick={() => setActiveTab("events")}
               className={`px-6 py-4 font-medium text-lg transition-colors ${
                 activeTab === "events"
@@ -268,10 +283,12 @@ const SportsClub = () => {
               </p>
             </div>
             <div className="md:w-1/2" data-aos="fade-left">
-              <img
+              <OptimizedImage
                 src="/images/sports/facility1.jpg"
                 alt="Osuele Sports Facility"
                 className="rounded-lg shadow-lg w-full h-auto"
+                sizes={getImageSizes('md:w-1/2')}
+                priority={false}
               />
             </div>
           </div>
@@ -296,10 +313,12 @@ const SportsClub = () => {
               </ul>
             </div>
             <div className="md:w-1/2" data-aos="fade-right">
-              <img
+              <OptimizedImage
                 src="/images/sports/facility2.jpg"
                 alt="Osuele Sports Facility"
                 className="rounded-lg shadow-lg w-full h-auto"
+                sizes={getImageSizes('md:w-1/2')}
+                priority={false}
               />
             </div>
           </div>
@@ -331,9 +350,8 @@ const SportsClub = () => {
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.559816396872!2d-0.1713192!3d5.636413!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9c7ebaeaaaab%3A0xd78257e67498a112!2sEast%20Legon%2C%20Accra!5e0!3m2!1sen!2sgh!4v1652345234526!5m2!1sen!2sgh"
                 width="100%"
                 height="400"
-                style={{ border: 0 }}
+                className="border-0"
                 allowFullScreen
-                loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Osuele Sports Club Location"
               ></iframe>
@@ -426,7 +444,10 @@ const SportsClub = () => {
               </div>
             </div>
             <div className="mt-6 text-center">
-              <button className="px-8 py-3 bg-accent text-white rounded-md font-semibold hover:bg-accent/90 transition-colors">
+              <button 
+                type="button"
+                className="px-8 py-3 bg-accent text-white rounded-md font-semibold hover:bg-accent/90 transition-colors"
+              >
                 Join Our Club
               </button>
             </div>
@@ -449,10 +470,11 @@ const SportsClub = () => {
                 data-aos-delay={index * 100}
               >
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img
+                  <OptimizedImage
                     src={member.image}
                     alt={member.name}
                     className="w-full h-full object-cover"
+                    sizes={getImageSizes('md:w-1/2')}
                   />
                 </div>
                 <div className="p-6">
@@ -477,7 +499,10 @@ const SportsClub = () => {
               team. If you're interested in sports management, coaching, or
               facility operations, we'd love to hear from you.
             </p>
-            <button className="px-8 py-3 bg-primary text-white rounded-md font-semibold hover:bg-primary/90 transition-colors">
+            <button 
+              type="button"
+              className="px-8 py-3 bg-primary text-white rounded-md font-semibold hover:bg-primary/90 transition-colors"
+            >
               View Career Opportunities
             </button>
           </div>
@@ -492,18 +517,22 @@ const SportsClub = () => {
 
           <div className="space-y-8">
             {events.map((event, index) => (
-              <div
-                key={event.id}
+              <div 
                 className="flex flex-col md:flex-row gap-6 bg-white rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-shadow"
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
                 onClick={() => openEventModal(event)}
+                onKeyDown={(e) => e.key === 'Enter' && openEventModal(event)}
+                tabIndex={0}
+                role="button"
+                aria-label={`View details of ${event.title}`}
               >
                 <div className="md:w-1/3 h-48 md:h-auto">
-                  <img
+                  <OptimizedImage
                     src={event.image}
                     alt={event.title}
                     className="w-full h-full object-cover"
+                    sizes={getImageSizes('md:w-1/3')}
                   />
                 </div>
                 <div className="p-6 md:w-2/3">
@@ -523,9 +552,9 @@ const SportsClub = () => {
                   <p className="text-secondary/80 line-clamp-2 mb-4">
                     {event.description}
                   </p>
-                  <button className="text-accent font-medium hover:text-primary transition-colors">
+                  <span className="text-accent font-medium hover:text-primary transition-colors">
                     View Details
-                  </button>
+                  </span>
                 </div>
               </div>
             ))}
@@ -543,7 +572,10 @@ const SportsClub = () => {
               and corporate sports days. Contact us to discuss your
               requirements and book your event.
             </p>
-            <button className="px-8 py-3 bg-primary text-white rounded-md font-semibold hover:bg-primary/90 transition-colors">
+            <button 
+              type="button"
+              className="px-8 py-3 bg-primary text-white rounded-md font-semibold hover:bg-primary/90 transition-colors"
+            >
               Inquire About Event Hosting
             </button>
           </div>
@@ -555,28 +587,38 @@ const SportsClub = () => {
         <div
           className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
           onClick={closeEventModal}
+          onKeyDown={handleKeyDown}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
         >
           <div
             className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
+            role="document"
+            tabIndex={-1}
           >
             <div className="relative">
               <button
+                type="button"
                 onClick={closeEventModal}
                 className="absolute top-4 right-4 w-10 h-10 bg-primary/80 text-white rounded-full flex items-center justify-center hover:bg-primary z-10"
+                aria-label="Close modal"
               >
                 ✕
               </button>
               <div className="h-72 md:h-80">
-                <img
+                <OptimizedImage
                   src={selectedEvent.image}
                   alt={selectedEvent.title}
                   className="w-full h-full object-cover"
+                  sizes="(min-width: 768px) 768px, 100vw"
+                  priority={true}
                 />
               </div>
             </div>
             <div className="p-6 md:p-8">
-              <h3 className="text-2xl md:text-3xl font-bold text-primary mb-4">
+              <h3 id="modal-title" className="text-2xl md:text-3xl font-bold text-primary mb-4">
                 {selectedEvent.title}
               </h3>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6 text-sm">
@@ -619,7 +661,10 @@ const SportsClub = () => {
               </div>
 
               <div className="mt-8 pt-6 border-t border-gray-200 flex justify-center">
-                <button className="px-8 py-3 bg-primary text-white rounded-md font-semibold hover:bg-primary/90 transition-colors">
+                <button 
+                  type="button"
+                  className="px-8 py-3 bg-primary text-white rounded-md font-semibold hover:bg-primary/90 transition-colors"
+                >
                   Register for this Event
                 </button>
               </div>
@@ -650,10 +695,16 @@ const SportsClub = () => {
             data-aos="fade-up"
             data-aos-delay="200"
           >
-            <button className="px-8 py-3 bg-accent text-white rounded-md font-semibold hover:bg-accent/90 transition-colors">
+            <button 
+              type="button"
+              className="px-8 py-3 bg-accent text-white rounded-md font-semibold hover:bg-accent/90 transition-colors"
+            >
               Become a Member
             </button>
-            <button className="px-8 py-3 bg-transparent text-white border-2 border-white rounded-md font-semibold hover:bg-white/10 transition-colors">
+            <button 
+              type="button"
+              className="px-8 py-3 bg-transparent text-white border-2 border-white rounded-md font-semibold hover:bg-white/10 transition-colors"
+            >
               Schedule a Visit
             </button>
           </div>

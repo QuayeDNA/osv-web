@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { Target, BookOpen, Award, TrendingUp, Users } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import OptimizedImage from '../components/ui/OptimizedImage';
+import { shouldPrioritize, getImageSizes } from '../utils/image-utils';
 
 const About = () => {
   useEffect(() => {
@@ -15,7 +17,7 @@ const About = () => {
 
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section - Using OptimizedBackground */}
       <section className="relative py-24 bg-primary">
         <div className="absolute inset-0 bg-[url('/images/about-hero.jpg')] bg-cover bg-center opacity-20"></div>
         <div className="container mx-auto px-4 z-10 relative">
@@ -33,7 +35,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Company History */}
+      {/* Company History - Using OptimizedImage */}
       <section className="section bg-white">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row gap-12 items-center">
@@ -50,10 +52,12 @@ const About = () => {
               </p>
             </div>
             <div className="md:w-1/2" data-aos="fade-left">
-              <img 
+              <OptimizedImage 
                 src="/images/history.jpg" 
                 alt="Osuele Ventures History" 
                 className="rounded-lg shadow-lg w-full h-auto"
+                sizes={getImageSizes('md:w-1/2')}
+                priority={shouldPrioritize('/images/history.jpg')}
               />
             </div>
           </div>

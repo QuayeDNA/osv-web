@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import OptimizedImage from '../ui/OptimizedImage';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -73,8 +74,15 @@ const Header = () => {
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link to="/" className="flex items-center group">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg sm:text-xl mr-2 transition-transform group-hover:scale-110">
-            OV
+          <div className="w-12 h-12 mr-3 transition-transform group-hover:scale-110">
+            <OptimizedImage
+              src="/images/logo.svg"
+              alt="Osuele Ventures Logo"
+              width={48}
+              height={48}
+              priority={true}
+              className="w-full h-full"
+            />
           </div>
           <span className="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
             Osuele Ventures

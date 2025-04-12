@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Building2, ShieldCheck, Wrench, Briefcase, Radio, Users, Star, ChevronRight } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import OptimizedImage from '../components/ui/OptimizedImage';
+import { shouldPrioritize, getImageSizes } from '../utils/image-utils';
 
 const services = [
   {
@@ -129,10 +131,12 @@ const Home = () => {
               <div className="relative">
                 <div className="absolute -top-4 -left-4 w-full h-full border-2 border-accent rounded-lg"></div>
                 <div className="rounded-lg overflow-hidden shadow-2xl">
-                  <img 
+                  <OptimizedImage 
                     src="/images/about-image.jpg" 
                     alt="Osuele Ventures Team" 
                     className="w-full h-auto object-cover transform transition-transform hover:scale-105 duration-500"
+                    priority={shouldPrioritize('/images/about-image.jpg')}
+                    sizes={getImageSizes('md:w-1/2')}
                   />
                 </div>
               </div>
