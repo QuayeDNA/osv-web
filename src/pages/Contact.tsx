@@ -258,20 +258,19 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Map Section */}
+      {/* Map Section with Google Maps */}
       <section className="h-[450px] mt-12">
         <div className="w-full h-full">
           <iframe
-            src="https://www.openstreetmap.org/export/embed.html?bbox=-0.2960205078125%2C5.533459198300096%2C-0.13717651367188%2C5.6512579469421465&amp;layer=mapnik&amp;marker=5.59237%2C-0.2165985"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.521299593927!2d-0.21909852414558866!3d5.6518779956822085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNcKwMzknMDYuOCJOIDDCsDEzJzA0LjgiVw!5e0!3m2!1sen!2sgh!4v1713072504182!5m2!1sen!2sgh"
             width="100%"
             height="100%"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"
             title="Osuele Ventures Location"
-            referrerPolicy="no-referrer"
+            referrerPolicy="no-referrer-when-downgrade"
             className="rounded-lg shadow-lg"
-            sandbox="allow-scripts allow-same-origin"
           ></iframe>
         </div>
       </section>

@@ -386,18 +386,17 @@ const SportsClub = () => {
               </InfoItem>
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
+              {/* Replace OpenStreetMap with Google Maps iframe */}
               <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=-0.19153118133544925%2C5.622413155392498%2C-0.15099525451660159%2C5.650243301286097&amp;layer=mapnik&amp;marker=5.636331%2C-0.171263"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.6964310454996!2d-0.17363762414567715!3d5.6363299956899155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNcKwMzgnMTAuOCJOIDDCsDEwJzE2LjUiVw!5e0!3m2!1sen!2sgh!4v1713072348951!5m2!1sen!2sgh"
                 width="100%"
                 height="400"
-                className="border-0"
+                style={{ border: "none", width: "100%", height: "400px" }}
                 allowFullScreen
-                referrerPolicy="no-referrer"
                 loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
                 aria-label="Map showing the location of Osuele Sports Club"
                 title="Osuele Sports Club Location"
-                style={{ border: "none", width: "100%", height: "400px" }}
-                sandbox="allow-scripts allow-same-origin"
               ></iframe>
             </div>
           </div>
