@@ -97,7 +97,7 @@ const Header = () => {
                   `font-medium px-3 xl:px-4 py-2 rounded-md transition-all block hover:bg-light whitespace-nowrap ${
                     isActive 
                       ? 'text-accent relative after:absolute after:bottom-0 after:left-3 after:right-3 xl:after:left-4 xl:after:right-4 after:h-0.5 after:bg-accent' 
-                      : isScrolled ? 'text-primary' : 'text-primary'
+                      : 'text-primary'
                   }`
                 }
               >
