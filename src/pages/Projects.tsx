@@ -27,7 +27,7 @@ const Projects = () => {
       id: 1,
       title: 'Corporate Office Network Installation',
       category: 'telecom',
-      image: '/src/assets/projects/telecom-1.jpg',
+      image: '/images/projects/telecom-1.jpg',
       description: 'Complete network infrastructure setup for a corporate headquarters, including fiber optic cabling, network hardware, and VoIP phone systems.',
       client: 'Global Finance Corporation',
       location: 'Accra, Ghana',
@@ -37,7 +37,7 @@ const Projects = () => {
       id: 2,
       title: 'Luxury Apartment Complex',
       category: 'construction',
-      image: '/src/assets/projects/construction-1.jpg',
+      image: '/images/projects/construction-1.jpg',
       description: 'Design and construction of a 50-unit luxury apartment complex with modern amenities, underground parking, and landscaped gardens.',
       client: 'Prime Development Ltd',
       location: 'Kumasi, Ghana',
@@ -47,7 +47,7 @@ const Projects = () => {
       id: 3,
       title: 'Highway Bridge Construction',
       category: 'civil',
-      image: '/src/assets/projects/civil-1.jpg',
+      image: '/images/projects/civil-1.jpg',
       description: 'Engineering and construction of a reinforced concrete bridge spanning 100 meters across a river, connecting two major communities.',
       client: 'Ghana Highway Authority',
       location: 'Eastern Region, Ghana',
@@ -57,7 +57,7 @@ const Projects = () => {
       id: 4,
       title: 'Telecommunications Tower Installation',
       category: 'equipment',
-      image: '/src/assets/projects/equipment-1.jpg',
+      image: '/images/projects/equipment-1.jpg',
       description: 'Supply and installation of telecommunications towers in rural areas to improve connectivity, including solar power systems.',
       client: 'National Communications Authority',
       location: 'Northern Region, Ghana',
@@ -67,7 +67,7 @@ const Projects = () => {
       id: 5,
       title: 'Office Complex Renovation',
       category: 'construction',
-      image: '/src/assets/projects/construction-2.jpg',
+      image: '/images/projects/construction-2.jpg',
       description: 'Complete renovation of a 10-story office building including structural repairs, modern interior design, and upgraded utilities.',
       client: 'Business Plaza Ltd',
       location: 'Accra, Ghana',
@@ -77,7 +77,7 @@ const Projects = () => {
       id: 6,
       title: 'Medical Equipment Supply',
       category: 'supplies',
-      image: '/src/assets/projects/supplies-1.jpg',
+      image: '/images/projects/supplies-1.jpg',
       description: 'Procurement and delivery of specialized medical equipment for a new hospital wing, including installation and staff training.',
       client: 'Korle Bu Teaching Hospital',
       location: 'Accra, Ghana',
@@ -87,7 +87,7 @@ const Projects = () => {
       id: 7,
       title: 'Water Treatment Plant',
       category: 'civil',
-      image: '/src/assets/projects/civil-2.jpg',
+      image: '/images/projects/civil-2.jpg',
       description: 'Design and construction of a water treatment facility capable of processing 10,000 gallons per day, serving multiple communities.',
       client: 'Ghana Water Company',
       location: 'Western Region, Ghana',
@@ -97,7 +97,7 @@ const Projects = () => {
       id: 8,
       title: 'Hotel Network Upgrade',
       category: 'telecom',
-      image: '/src/assets/projects/telecom-2.jpg',
+      image: '/images/projects/telecom-2.jpg',
       description: 'Comprehensive upgrade of a 5-star hotel\'s network infrastructure, improving guest connectivity and internal operations.',
       client: 'Luxury Stays Hotel',
       location: 'Takoradi, Ghana',
@@ -107,7 +107,7 @@ const Projects = () => {
       id: 9,
       title: 'School Furniture Supply',
       category: 'supplies',
-      image: '/src/assets/projects/supplies-2.jpg',
+      image: '/images/projects/supplies-2.jpg',
       description: 'Manufacturing and delivery of classroom furniture for 20 newly constructed schools, including desks, chairs, and storage cabinets.',
       client: 'Ghana Education Service',
       location: 'Multiple Locations, Ghana',
@@ -158,7 +158,7 @@ const Projects = () => {
     <>
       {/* Hero Section */}
       <section className="relative py-24 bg-primary">
-        <div className="absolute inset-0 bg-[url('/src/assets/projects-bg.jpg')] bg-cover bg-center opacity-20"></div>
+        <div className="absolute inset-0 bg-[url('/images/projects.jpg')] bg-cover bg-center opacity-20"></div>
         <div className="container mx-auto px-4 z-10 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

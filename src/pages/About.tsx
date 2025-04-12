@@ -17,7 +17,7 @@ const About = () => {
     <>
       {/* Hero Section */}
       <section className="relative py-24 bg-primary">
-        <div className="absolute inset-0 bg-[url('/src/assets/about-hero.jpg')] bg-cover bg-center opacity-20"></div>
+        <div className="absolute inset-0 bg-[url('/images/about-hero.jpg')] bg-cover bg-center opacity-20"></div>
         <div className="container mx-auto px-4 z-10 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -51,7 +51,7 @@ const About = () => {
             </div>
             <div className="md:w-1/2" data-aos="fade-left">
               <img 
-                src="/src/assets/history.jpg" 
+                src="/images/history.jpg" 
                 alt="Osuele Ventures History" 
                 className="rounded-lg shadow-lg w-full h-auto"
               />

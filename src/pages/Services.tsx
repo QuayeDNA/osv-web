@@ -111,7 +111,7 @@ const Services = () => {
     <>
       {/* Hero Section */}
       <section className="relative py-24 bg-primary">
-        <div className="absolute inset-0 bg-[url('/src/assets/services-bg.jpg')] bg-cover bg-center opacity-20"></div>
+        <div className="absolute inset-0 bg-[url('/images/services-bg.jpg')] bg-cover bg-center opacity-20"></div>
         <div className="container mx-auto px-4 z-10 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -183,7 +183,7 @@ const Services = () => {
                       </div>
                       <div className="md:w-1/3">
                         <img 
-                          src={`/src/assets/services/${service.id}.jpg`}
+                          src={`/images/services/${service.id}.jpg`}
                           alt={service.title}
                           className="w-full h-auto rounded-lg shadow-md"
                         />

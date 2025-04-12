@@ -66,28 +66,28 @@ const SportsClub = () => {
       id: 1,
       name: "Samuel Osei",
       position: "Club Director",
-      image: "/src/assets/sports/team1.jpg",
+      image: "/images/sports/team1.jpg",
       bio: "Samuel has over 15 years of experience in sports management and has successfully led multiple sports clubs to national recognition.",
     },
     {
       id: 2,
       name: "Grace Adepa",
       position: "Head Coach",
-      image: "/src/assets/sports/team2.jpg",
+      image: "/images/sports/team2.jpg",
       bio: "A former national athlete, Grace brings her extensive experience and passion for sports to develop high-performing teams and individuals.",
     },
     {
       id: 3,
       name: "Daniel Mensah",
       position: "Facilities Manager",
-      image: "/src/assets/sports/team3.jpg",
+      image: "/images/sports/team3.jpg",
       bio: "With a background in civil engineering, Daniel oversees the maintenance and development of our state-of-the-art facilities.",
     },
     {
       id: 4,
       name: "Abena Kusi",
       position: "Youth Program Coordinator",
-      image: "/src/assets/sports/team4.jpg",
+      image: "/images/sports/team4.jpg",
       bio: "Abena specializes in youth sports development and has created innovative programs that nurture young talent from grassroots to professional levels.",
     },
   ];
@@ -137,7 +137,7 @@ const SportsClub = () => {
       location: "Osuele Sports Complex, Accra",
       description:
         "Our flagship sports tournament featuring multiple disciplines including football, basketball, athletics, and more. Open to both club members and invited teams from across Ghana.",
-      image: "/src/assets/sports/event1.jpg",
+      image: "/images/sports/event1.jpg",
     },
     {
       id: 2,
@@ -146,7 +146,7 @@ const SportsClub = () => {
       location: "Osuele Training Grounds",
       description:
         "A two-week intensive sports camp for youth aged 8-16. The camp focuses on skills development, team building, and introducing young athletes to various sports disciplines.",
-      image: "/src/assets/sports/event2.jpg",
+      image: "/images/sports/event2.jpg",
     },
     {
       id: 3,
@@ -155,7 +155,7 @@ const SportsClub = () => {
       location: "Osuele Fitness Center",
       description:
         "A weekend dedicated to fitness challenges for all levels. Participants can test their strength, endurance, and agility through various challenges and competitions.",
-      image: "/src/assets/sports/event3.jpg",
+      image: "/images/sports/event3.jpg",
     },
   ];
 
@@ -173,7 +173,7 @@ const SportsClub = () => {
     <>
       {/* Hero Section */}
       <section className="relative h-[70vh] flex items-center bg-primary">
-        <div className="absolute inset-0 bg-[url('/src/assets/sports/sports-hero.jpg')] bg-cover bg-center opacity-30"></div>
+        <div className="absolute inset-0 bg-[url('/images/sports/sports-hero.jpg')] bg-cover bg-center opacity-30"></div>
         <div className="container mx-auto px-4 z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -269,7 +269,7 @@ const SportsClub = () => {
             </div>
             <div className="md:w-1/2" data-aos="fade-left">
               <img
-                src="/src/assets/sports/facility1.jpg"
+                src="/images/sports/facility1.jpg"
                 alt="Osuele Sports Facility"
                 className="rounded-lg shadow-lg w-full h-auto"
               />
@@ -297,7 +297,7 @@ const SportsClub = () => {
             </div>
             <div className="md:w-1/2" data-aos="fade-right">
               <img
-                src="/src/assets/sports/facility2.jpg"
+                src="/images/sports/facility2.jpg"
                 alt="Osuele Sports Facility"
                 className="rounded-lg shadow-lg w-full h-auto"
               />

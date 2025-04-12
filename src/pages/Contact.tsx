@@ -76,7 +76,7 @@ const Contact = () => {
     <>
       {/* Hero Section */}
       <section className="relative py-24 bg-primary">
-        <div className="absolute inset-0 bg-[url('/src/assets/contact-bg.jpg')] bg-cover bg-center opacity-20"></div>
+        <div className="absolute inset-0 bg-[url('/images/contact-bg.jpg')] bg-cover bg-center opacity-20"></div>
         <div className="container mx-auto px-4 z-10 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -73,7 +73,7 @@ const Home = () => {
     <>
       {/* Hero Section - Enhanced with parallax effect */}
       <section className="relative h-screen flex items-center bg-gradient-to-r from-primary to-primary/90 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/src/assets/hero-bg.jpg')] bg-cover bg-center opacity-20 transform scale-105 motion-safe:animate-subtle-zoom"></div>
+        <div className="absolute inset-0 bg-[url('/images/hero-bg.jpg')] bg-cover bg-center opacity-20 transform scale-105 motion-safe:animate-subtle-zoom"></div>
         <div className="container mx-auto px-4 z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -130,7 +130,7 @@ const Home = () => {
                 <div className="absolute -top-4 -left-4 w-full h-full border-2 border-accent rounded-lg"></div>
                 <div className="rounded-lg overflow-hidden shadow-2xl">
                   <img 
-                    src="/src/assets/about-image.jpg" 
+                    src="/images/about-image.jpg" 
                     alt="Osuele Ventures Team" 
                     className="w-full h-auto object-cover transform transition-transform hover:scale-105 duration-500"
                   />
