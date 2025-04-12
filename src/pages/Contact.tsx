@@ -257,13 +257,12 @@ const Contact = () => {
       <section className="h-[450px] mt-12">
         <div className="w-full h-full">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d254338.22138859655!2d-0.2715344!3d5.5912569!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9084b2b7a773%3A0xbed14ed8650e2dd3!2sAccra%2C%20Ghana!5e0!3m2!1sen!2sus!4v1652345234526!5m2!1sen!2sus"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-0.2960205078125%2C5.533459198300096%2C-0.13717651367188%2C5.6512579469421465&amp;layer=mapnik&amp;marker=5.59237%2C-0.2165985"
             width="100%"
             height="100%"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
             title="Osuele Ventures Location"
           ></iframe>
         </div>

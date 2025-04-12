@@ -347,7 +347,7 @@ const SportsClub = () => {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.559816396872!2d-0.1713192!3d5.636413!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9c7ebaeaaaab%3A0xd78257e67498a112!2sEast%20Legon%2C%20Accra!5e0!3m2!1sen!2sgh!4v1652345234526!5m2!1sen!2sgh"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-0.19153118133544925%2C5.622413155392498%2C-0.15099525451660159%2C5.650243301286097&amp;layer=mapnik&amp;marker=5.636331%2C-0.171263"
                 width="100%"
                 height="400"
                 className="border-0"
