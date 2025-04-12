@@ -6,6 +6,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import OptimizedImage from '../components/ui/OptimizedImage';
 import { getImageSizes } from '../utils/image-utils';
+import { updateMetaTags, pageSeoData } from '../utils/seo-utils';
 
 const servicesData = [
   {
@@ -98,6 +99,10 @@ const Services = () => {
   const [expandedService, setExpandedService] = useState<string | null>(null);
 
   useEffect(() => {
+    // Update SEO meta tags for Services page
+    updateMetaTags(pageSeoData.services);
+    
+    // Initialize AOS animations
     AOS.init({
       duration: 1000,
       easing: 'ease-in-out',

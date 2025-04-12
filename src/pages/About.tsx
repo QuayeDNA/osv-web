@@ -5,9 +5,14 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import OptimizedImage from '../components/ui/OptimizedImage';
 import { shouldPrioritize, getImageSizes } from '../utils/image-utils';
+import { updateMetaTags, pageSeoData } from '../utils/seo-utils';
 
 const About = () => {
   useEffect(() => {
+    // Apply SEO meta tags for About page
+    updateMetaTags(pageSeoData.about);
+    
+    // Initialize AOS animations
     AOS.init({
       duration: 1000,
       easing: 'ease-in-out',

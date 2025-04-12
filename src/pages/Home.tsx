@@ -6,6 +6,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import OptimizedImage from '../components/ui/OptimizedImage';
 import { shouldPrioritize, getImageSizes } from '../utils/image-utils';
+import { updateMetaTags, pageSeoData } from '../utils/seo-utils';
 
 const services = [
   {
@@ -63,6 +64,10 @@ const testimonials = [
 
 const Home = () => {
   useEffect(() => {
+    // SEO meta tags update
+    updateMetaTags(pageSeoData.home);
+    
+    // AOS initialization
     AOS.init({
       duration: 1000,
       easing: 'ease-in-out',

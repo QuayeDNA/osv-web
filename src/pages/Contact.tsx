@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { updateMetaTags, pageSeoData } from '../utils/seo-utils';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +21,10 @@ const Contact = () => {
   });
 
   useEffect(() => {
+    // Apply SEO meta tags for Contact page
+    updateMetaTags(pageSeoData.contact);
+    
+    // Initialize AOS animations
     AOS.init({
       duration: 1000,
       easing: 'ease-in-out',

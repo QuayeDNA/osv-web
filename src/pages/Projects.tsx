@@ -4,6 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import OptimizedImage from '../components/ui/OptimizedImage';
 import { getImageSizes } from '../utils/image-utils';
+import { updateMetaTags, pageSeoData } from '../utils/seo-utils';
 
 // Project type definition
 type CategoryId = 'all' | 'telecom' | 'construction' | 'civil' | 'equipment' | 'supplies';
@@ -172,6 +173,10 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
+
+    // Update meta tags for SEO
+    updateMetaTags(pageSeoData.projects);
+
     // Initialize AOS animation library
     AOS.init({
       duration: 1000,
@@ -327,15 +332,13 @@ const Projects = () => {
               >
                 ✕
               </button>
-              <div className="h-72 md:h-96">
-                <OptimizedImage
+                <div className="h-72 md:h-96">
+                <img
                   src={selectedProject.detailImage ?? selectedProject.image}
                   alt={selectedProject.title}
                   className="w-full h-full object-cover"
-                  sizes="(min-width: 768px) 768px, 100vw"
-                  priority={true}
                 />
-              </div>
+                </div>
             </div>
             <div className="p-6 md:p-8">
               <h3 id="modal-title" className="text-2xl md:text-3xl font-bold mb-4">{selectedProject.title}</h3>

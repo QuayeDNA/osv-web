@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { updateMetaTags, pageSeoData } from "../utils/seo-utils";
 
 // Import reusable components
 import SectionHeader from "../components/ui/SectionHeader";
@@ -55,11 +56,49 @@ const SportsClub = () => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   useEffect(() => {
+    // Apply SEO meta tags for Sports Club page
+    updateMetaTags({
+      ...pageSeoData.sportsClub,
+      // Enhanced meta description for better SEO
+      description: "Osuele Sports Club offers world-class facilities, professional training programs, and community sports events in Accra, Ghana. Join our vibrant sports community today!",
+    });
+
+    // Initialize AOS for animations
     AOS.init({
       duration: 1000,
       easing: "ease-in-out",
       once: true,
     });
+
+    // Add JSON-LD structured data for better SEO
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "SportsActivityLocation",
+      "name": "Osuele Sports Club",
+      "description": "Premier sports club in Accra offering facilities, training programs, and community sports events",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Athletic Avenue",
+        "addressLocality": "East Legon",
+        "addressRegion": "Accra",
+        "addressCountry": "Ghana"
+      },
+      "openingHours": "Mo-Fr 06:00-22:00, Sa 08:00-20:00, Su 10:00-18:00",
+      "telephone": "+233 20 123 4567",
+      "image": "/images/sports/sports-hero.jpg",
+      "url": window.location.href
+    };
+
+    // Add structured data script to head
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+
+    // Clean up function to remove the script when component unmounts
+    return () => {
+      document.head.removeChild(script);
+    };
   }, []);
 
   // Sample team data
@@ -171,19 +210,20 @@ const SportsClub = () => {
     document.body.style.overflow = "auto";
   };
 
-  // Handle keyboard events for modal and interactive elements
+  // Enhanced keyboard event handler for better accessibility
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
       closeEventModal();
-    } else if (e.key === 'Enter') {
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault(); // Prevent default space behavior
       // The element's onClick will be triggered by Enter
     }
   };
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-center bg-primary">
+      {/* Hero Section with enhanced SEO heading structure */}
+      <section className="relative h-[70vh] flex items-center bg-primary" aria-labelledby="hero-heading">
         <div className="absolute inset-0 bg-[url('/images/sports/sports-hero.jpg')] bg-cover bg-center opacity-30"></div>
         <div className="container mx-auto px-4 z-10">
           <motion.div
@@ -192,7 +232,7 @@ const SportsClub = () => {
             transition={{ duration: 0.8 }}
             className="text-center text-white max-w-4xl mx-auto"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
               Osuele Sports Club
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-white/90">
@@ -202,7 +242,7 @@ const SportsClub = () => {
         </div>
       </section>
 
-      {/* Tab Navigation */}
+      {/* Tab Navigation - keeping buttons with proper roles */}
       <section className="bg-white border-b">
         <div className="container mx-auto">
           <div className="flex flex-wrap justify-center">
@@ -395,7 +435,7 @@ const SportsClub = () => {
             ))}
           </div>
 
-          {/* Membership section */}
+          {/* Membership section - fixed list items with keys */}
           <div
             className="mt-12 p-8 bg-primary text-white rounded-lg"
             data-aos="fade-up"
@@ -409,18 +449,24 @@ const SportsClub = () => {
                   Individual Membership
                 </h4>
                 <ul className="space-y-2">
-                  <CheckItem 
-                    text="Full access to all facilities during operating hours" 
-                    className="flex items-start" 
-                  />
-                  <CheckItem 
-                    text="Discounted rates for specialized programs" 
-                    className="flex items-start" 
-                  />
-                  <CheckItem 
-                    text="Basic fitness assessment and program design" 
-                    className="flex items-start" 
-                  />
+                  <li key="access">
+                    <CheckItem 
+                      text="Full access to all facilities during operating hours" 
+                      className="flex items-start" 
+                    />
+                  </li>
+                  <li key="rates">
+                    <CheckItem 
+                      text="Discounted rates for specialized programs" 
+                      className="flex items-start" 
+                    />
+                  </li>
+                  <li key="assessment">
+                    <CheckItem 
+                      text="Basic fitness assessment and program design" 
+                      className="flex items-start" 
+                    />
+                  </li>
                 </ul>
               </div>
               <div>
@@ -428,18 +474,24 @@ const SportsClub = () => {
                   Family Membership
                 </h4>
                 <ul className="space-y-2">
-                  <CheckItem 
-                    text="Access for up to 5 family members" 
-                    className="flex items-start" 
-                  />
-                  <CheckItem 
-                    text="Priority registration for youth programs" 
-                    className="flex items-start" 
-                  />
-                  <CheckItem 
-                    text="Free attendance at monthly family sports events" 
-                    className="flex items-start" 
-                  />
+                  <li key="family-access">
+                    <CheckItem 
+                      text="Access for up to 5 family members" 
+                      className="flex items-start" 
+                    />
+                  </li>
+                  <li key="family-priority">
+                    <CheckItem 
+                      text="Priority registration for youth programs" 
+                      className="flex items-start" 
+                    />
+                  </li>
+                  <li key="family-events">
+                    <CheckItem 
+                      text="Free attendance at monthly family sports events" 
+                      className="flex items-start" 
+                    />
+                  </li>
                 </ul>
               </div>
             </div>
@@ -518,14 +570,10 @@ const SportsClub = () => {
           <div className="space-y-8">
             {events.map((event, index) => (
               <div 
-                className="flex flex-col md:flex-row gap-6 bg-white rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+                key={event.id}
+                className="flex flex-col md:flex-row gap-6 bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
-                onClick={() => openEventModal(event)}
-                onKeyDown={(e) => e.key === 'Enter' && openEventModal(event)}
-                tabIndex={0}
-                role="button"
-                aria-label={`View details of ${event.title}`}
               >
                 <div className="md:w-1/3 h-48 md:h-auto">
                   <OptimizedImage
@@ -552,9 +600,15 @@ const SportsClub = () => {
                   <p className="text-secondary/80 line-clamp-2 mb-4">
                     {event.description}
                   </p>
-                  <span className="text-accent font-medium hover:text-primary transition-colors">
+                  <button
+                    type="button"
+                    onClick={() => openEventModal(event)}
+                    onKeyDown={handleKeyDown}
+                    className="text-accent font-medium hover:text-primary transition-colors"
+                    aria-label={`View details of ${event.title}`}
+                  >
                     View Details
-                  </span>
+                  </button>
                 </div>
               </div>
             ))}
@@ -582,20 +636,18 @@ const SportsClub = () => {
         </TabContent>
       </div>
 
-      {/* Event Detail Modal */}
+      {/* Event Detail Modal - using dialog element instead of role="dialog" */}
       {selectedEvent && (
-        <div
-          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+        <dialog
+          open
+          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 w-full h-full"
           onClick={closeEventModal}
           onKeyDown={handleKeyDown}
-          role="dialog"
-          aria-modal="true"
           aria-labelledby="modal-title"
         >
           <div
             className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
-            role="document"
             tabIndex={-1}
           >
             <div className="relative">
@@ -670,7 +722,7 @@ const SportsClub = () => {
               </div>
             </div>
           </div>
-        </div>
+        </dialog>
       )}
 
       {/* Call to Action */}

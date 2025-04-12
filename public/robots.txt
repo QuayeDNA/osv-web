@@ -1,0 +1,11 @@
+# Robots.txt file for Osuele Ventures
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://osuele.com/sitemap.xml
+
+# Prevent crawling of any private or temporary directories
+Disallow: /admin/
+Disallow: /temp/
+Disallow: /private/
