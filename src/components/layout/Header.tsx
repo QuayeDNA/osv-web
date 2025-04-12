@@ -69,7 +69,7 @@ const Header = () => {
         <Link to="/" className="flex items-center group">
           <div className="w-12 h-12 mr-3 transition-transform group-hover:scale-110">
             <img
-              src="/images/logo.svg"
+              src="logo.svg"
               alt="Osuele Ventures Logo"
               width={48}
               height={48}
