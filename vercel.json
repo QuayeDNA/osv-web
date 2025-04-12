@@ -33,7 +33,7 @@
       ]
     },
     {
-      "source": "/images/(.*\\.(jpg|jpeg|png|webp|avif|gif|svg))",
+      "source": "/images/(.+)\\.(jpg|jpeg|png|webp|avif|gif|svg)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -46,7 +46,7 @@
       ]
     },
     {
-      "source": "/images/(.*\\.png)",
+      "source": "/images/(.+)\\.png",
       "headers": [
         {
           "key": "Content-Type",
@@ -55,7 +55,7 @@
       ]
     },
     {
-      "source": "/images/(.*\\.webp)",
+      "source": "/images/(.+)\\.webp",
       "headers": [
         {
           "key": "Content-Type",
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "source": "/images/(.*\\.avif)",
+      "source": "/images/(.+)\\.avif",
       "headers": [
         {
           "key": "Content-Type",
