@@ -1,16 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Activity } from 'lucide-react';
+import { Menu, X, Activity, Home } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const SportsHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('about');
+  const [activeSection, setActiveSection] = useState('home');
   const location = useLocation();
+  const initialRender = useRef(true);
 
-  // Updated paths to match the root URL structure
+  // Updated paths to match the root URL structure with Home as first item
   const mainNavLinks = [
+    { name: 'Home', path: '/' },
     { name: 'About', path: '/#about' },
     { name: 'Programs', path: '/#programs' },
     { name: 'Team', path: '/#team' },
@@ -19,19 +21,30 @@ const SportsHeader = () => {
     { name: 'Contact', path: '/contact' },
   ];
 
-  // Update active section based on hash
+  // Update active section based on hash and path
   useEffect(() => {
     if (location.hash) {
       // Remove the # character
       setActiveSection(location.hash.substring(1));
+      
+      // Don't auto-scroll on initial page load
+      if (initialRender.current) {
+        initialRender.current = false;
+        return;
+      }
     } else if (location.pathname === '/' || location.pathname === '') {
-      // Default to 'about' section if no hash on home page
-      setActiveSection('about');
+      // Default to 'home' section if no hash on home page
+      setActiveSection('home');
     }
   }, [location.hash, location.pathname]);
 
   // Add scroll event listeners to track active section
   useEffect(() => {
+    // Disable the automatic hash updates on scroll for now
+    // This was causing the unwanted auto-scrolling behavior
+    
+    // Original code commented out to prevent auto-scrolling issues
+    /*
     const handleScroll = () => {
       if (location.pathname !== '/' && location.pathname !== '') return;
       
@@ -55,6 +68,7 @@ const SportsHeader = () => {
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+    */
   }, [location.pathname]);
 
   // Scroll to top when main route changes (not hash changes)
@@ -91,6 +105,17 @@ const SportsHeader = () => {
   const handleNavClick = (href: string) => {
     setIsMenuOpen(false);
     
+    // If it's the home link with no hash, scroll to top
+    if (href === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setActiveSection('home');
+      // Clear any hash from the URL
+      if (window.location.hash) {
+        history.pushState("", document.title, window.location.pathname);
+      }
+      return;
+    }
+    
     // Handle smooth scrolling for hash links
     if (href.includes('#')) {
       const id = href.split('#')[1];
@@ -113,7 +138,11 @@ const SportsHeader = () => {
           : 'bg-gradient-to-r from-primary to-primary/90 py-4'}`}
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <Link to="/" className="flex items-center group">
+          <Link 
+            to="/" 
+            onClick={() => handleNavClick('/')} 
+            className="flex items-center group"
+          >
             <div className="w-12 h-12 mr-3 p-1 flex items-center justify-center transition-transform group-hover:scale-110 shadow-md">
               <img src="/logo.svg" alt="Osuele Sports Logo" className="w-full h-full object-cover rounded-full" />
             </div>
@@ -136,9 +165,14 @@ const SportsHeader = () => {
                 <Link
                   to={link.path}
                   onClick={() => handleNavClick(link.path)}
-                  className={`font-medium px-3 xl:px-4 py-2 rounded-md transition-all block hover:bg-white/10 whitespace-nowrap text-white hover:text-accent relative after:absolute after:bottom-0 after:left-1/2 after:transform after:-translate-x-1/2 after:w-0 ${link.path.includes('#') && activeSection === link.path.split('#')[1] ? 'text-accent after:w-3/4 after:h-0.5 after:bg-accent' : ''} hover:after:w-3/4 after:h-0.5 after:bg-accent after:transition-all`}
+                  className={`font-medium px-3 xl:px-4 py-2 rounded-md transition-all block hover:bg-white/10 whitespace-nowrap text-white hover:text-accent relative after:absolute after:bottom-0 after:left-1/2 after:transform after:-translate-x-1/2 after:w-0 ${
+                    (link.path === '/' && activeSection === 'home') || 
+                    (link.path.includes('#') && activeSection === link.path.split('#')[1]) 
+                      ? 'text-accent after:w-3/4 after:h-0.5 after:bg-accent' 
+                      : ''
+                  } hover:after:w-3/4 after:h-0.5 after:bg-accent after:transition-all`}
                 >
-                  {link.name}
+                  {link.name === 'Home' && <Home className="inline-block mr-1 w-4 h-4" />} {link.name}
                 </Link>
               </motion.div>
             ))}
@@ -193,9 +227,14 @@ const SportsHeader = () => {
                       setIsMenuOpen(false);
                       handleNavClick(link.path);
                     }}
-                    className={`block font-medium py-2 transition-colors text-white hover:text-accent ${link.path.includes('#') && activeSection === link.path.split('#')[1] ? 'text-accent' : ''}`}
+                    className={`block font-medium py-2 transition-colors text-white hover:text-accent flex items-center ${
+                      (link.path === '/' && activeSection === 'home') || 
+                      (link.path.includes('#') && activeSection === link.path.split('#')[1]) 
+                        ? 'text-accent' 
+                        : ''
+                    }`}
                   >
-                    {link.name}
+                    {link.name === 'Home' && <Home className="mr-2 w-4 h-4" />} {link.name}
                   </Link>
                 </div>
               ))}

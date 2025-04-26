@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import {
   Dumbbell,
   Users,
@@ -19,21 +19,10 @@ const ProgramsSection = () => {
   const [activeTab, setActiveTab] = useState<ProgramTab>("basketball");
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Handle tab change
+  // Handle tab change - simple state update without scrolling
   const handleTabChange = (tabId: ProgramTab) => {
     setActiveTab(tabId);
   };
-
-  // Scroll content into view when tab changes
-  useEffect(() => {
-    if (contentRef.current) {
-      // Smooth scroll to content area
-      contentRef.current.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  }, [activeTab]);
 
   // Program descriptions
   const programs = {
@@ -205,13 +194,11 @@ const ProgramsSection = () => {
               <div
                 key={programKey}
                 id={`${programKey}-content`}
-                className={`${
-                  activeTab === programKey ? "block" : "hidden"
+                className={`transition-opacity duration-300 ease-in-out ${
+                  activeTab === programKey ? "opacity-100" : "opacity-0 hidden"
                 } bg-white rounded-lg shadow-md overflow-hidden`}
                 role="tabpanel"
                 aria-labelledby={`${programKey}-tab`}
-                data-aos="fade-up"
-                data-aos-once="false"
                 data-aos-duration="500"
               >
                 <div className="flex flex-col md:flex-row">
@@ -227,7 +214,7 @@ const ProgramsSection = () => {
                     <ul className="mb-6 space-y-2">
                       {program.features.map((feature, index) => (
                         <li
-                          key={index}
+                          key={`${programKey}-feature-${index}`}
                           className="flex items-start"
                         >
                           <span className="text-accent mr-2 mt-1">•</span>

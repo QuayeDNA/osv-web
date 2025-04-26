@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useLayoutEffect } from "react";
 import { motion } from "framer-motion";
 import { Dumbbell, Activity } from "lucide-react";
 import { 
@@ -21,7 +21,29 @@ import EventsSection from "../components/sports/EventsSection";
 import GallerySection from "../components/sports/GallerySection";
 
 const SportsClub = () => {
+  // Add a ref to track initial render
+  const initialRender = useRef(true);
+
+  // Use useLayoutEffect to run before browser paint to prevent flash of scrolling
+  useLayoutEffect(() => {
+    // Force scroll to top immediately before anything renders
+    window.scrollTo(0, 0);
+    
+    // Clear any existing hash from the URL without scrolling
+    if (window.location.hash) {
+      const cleanUrl = window.location.href.split('#')[0];
+      window.history.replaceState(null, document.title, cleanUrl);
+    }
+  }, []);
+  
   useEffect(() => {
+    // Prevent auto-scrolling on initial render
+    if (initialRender.current) {
+      // Force scroll to top again just to be sure
+      window.scrollTo(0, 0);
+      initialRender.current = false;
+    }
+    
     // Apply SEO meta tags for Sports Club page
     updateMetaTags({
       ...pageSeoData.sportsClub,
@@ -29,11 +51,17 @@ const SportsClub = () => {
       description: "Osuele Sports Club offers world-class boxing and football training in Accra, Ghana. Join our elite programs led by professional coaches. Sign up today!",
     });
 
-    // Initialize AOS for animations
+    // Initialize AOS for animations with modified settings to show animations without scrolling
     AOS.init({
       duration: 1000,
       easing: "ease-in-out",
       once: true,
+      offset: 0,         // Zero offset so animations trigger at the element's position
+      delay: 0,          // No delay in animation start
+      startEvent: 'DOMContentLoaded', // Trigger animations as soon as possible
+      mirror: false,     // No re-animation on scroll out
+      disable: false,    // Never disable animations
+      disableMutationObserver: false,
     });
 
     // Add JSON-LD structured data for better SEO
@@ -169,7 +197,10 @@ const SportsClub = () => {
                   className="group relative overflow-hidden px-10 py-5 bg-accent text-white rounded-lg font-bold hover:bg-accent/90 transition-all shadow-xl shadow-accent/20 transform hover:-translate-y-1 duration-300"
                   onClick={(e) => {
                     e.preventDefault();
-                    document.getElementById('programs')?.scrollIntoView({ behavior: 'smooth' });
+                    // Use a flag to prevent auto-scrolling on page load
+                    if (!initialRender.current) {
+                      document.getElementById('programs')?.scrollIntoView({ behavior: 'smooth' });
+                    }
                   }}
                 >
                   <span className="absolute inset-0 w-full h-full bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -183,7 +214,10 @@ const SportsClub = () => {
                   className="group relative overflow-hidden px-10 py-5 bg-transparent text-white border-2 border-white rounded-lg font-bold hover:bg-white/10 transition-all shadow-lg transform hover:-translate-y-1 duration-300"
                   onClick={(e) => {
                     e.preventDefault();
-                    document.getElementById('programs')?.scrollIntoView({ behavior: 'smooth' });
+                    // Use a flag to prevent auto-scrolling on page load
+                    if (!initialRender.current) {
+                      document.getElementById('programs')?.scrollIntoView({ behavior: 'smooth' });
+                    }
                   }}
                 >
                   <span className="absolute inset-0 w-full h-full bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></span>
