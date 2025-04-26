@@ -15,6 +15,67 @@ h1, h2, h3, h4, h5, h6 {
   animation: fadeIn 0.5s ease-in-out;
 }
 
+/* Sports Club specific animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes float-delayed {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes subtle-zoom {
+  0% { transform: scale(1.05); }
+  100% { transform: scale(1.15); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 0.2; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes pulse-delayed {
+  0% { opacity: 0.5; }
+  50% { opacity: 0.2; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.animate-subtle-zoom {
+  animation: subtle-zoom 15s infinite alternate ease-in-out;
+}
+
+.animate-pulse {
+  animation: pulse 4s infinite ease-in-out;
+}
+
+.animate-pulse-delayed {
+  animation: pulse-delayed 4s infinite ease-in-out;
+  animation-delay: 2s;
+}
+
+.animate-scroll-bounce {
+  animation: scroll-bounce 2s infinite ease-in-out;
+}
+
 /* Smooth transition for all interactive elements */
 a, button {
   transition: all 0.3s ease;

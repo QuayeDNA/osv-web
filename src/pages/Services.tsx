@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Radio, Briefcase, Wrench, Building2, ShieldCheck, Users, ChevronDown, ChevronUp, Check } from 'lucide-react';
+import { Radio, Briefcase, ShieldCheck, Users, ChevronDown, ChevronUp, Check } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import OptimizedImage from '../components/ui/OptimizedImage';
@@ -35,34 +35,6 @@ const servicesData = [
       'Electronics and computer hardware',
       'Construction materials',
       'Customized procurement solutions'
-    ]
-  },
-  {
-    id: 'engineering',
-    title: 'Civil Engineering',
-    icon: <Wrench className="w-12 h-12 text-accent" />,
-    shortDesc: 'Expert civil engineering services with attention to detail and quality.',
-    fullDesc: 'Our civil engineering department offers comprehensive services for both public and private projects. We combine technical expertise with innovative approaches to deliver infrastructure solutions that stand the test of time.',
-    features: [
-      'Structural design and analysis',
-      'Road and highway construction',
-      'Water supply and drainage systems',
-      'Site development and grading',
-      'Engineering consultancy services'
-    ]
-  },
-  {
-    id: 'construction',
-    title: 'Building Construction',
-    icon: <Building2 className="w-12 h-12 text-accent" />,
-    shortDesc: 'Professional construction services that bring architectural visions to life.',
-    fullDesc: 'From residential buildings to commercial complexes, our construction team handles projects of various scales and complexities. We adhere to the highest standards of quality and safety while ensuring timely completion.',
-    features: [
-      'Residential and commercial building construction',
-      'Renovation and remodeling',
-      'Project management and supervision',
-      'Interior finishing and fitouts',
-      'Construction consulting services'
     ]
   },
   {

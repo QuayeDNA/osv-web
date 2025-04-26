@@ -20,25 +20,11 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   className = '',
   priority = false,
   sizes = '100vw',
-  quality = 75,
   blurDataUrl,
   ...rest
 }) => {
   const [isLoaded, setIsLoaded] = useState(priority);
   const [imgSrc, setImgSrc] = useState(priority ? src : blurDataUrl ?? 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzIDIiPjwvc3ZnPg==');
-
-  // Generate srcSet for responsive images
-  const generateSrcSet = () => {
-    if (!src) return '';
-    
-    // Extract file extension
-    const fileExtension = src.split('.').pop() ?? 'jpg';
-    const basePath = src.substring(0, src.lastIndexOf('.'));
-    
-    return [320, 640, 960, 1280, 1920]
-      .map(size => `${basePath}-${size}.${fileExtension}?q=${quality} ${size}w`)
-      .join(', ');
-  };
 
   useEffect(() => {
     if (!priority) {
@@ -61,7 +47,6 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
         loading={priority ? 'eager' : 'lazy'}
         decoding={priority ? 'sync' : 'async'}
         sizes={sizes}
-        srcSet={priority ? generateSrcSet() : undefined}
         className={`transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-60'} ${className}`}
         onLoad={() => setIsLoaded(true)}
         {...rest}
